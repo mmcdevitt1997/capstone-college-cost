@@ -6,4 +6,4 @@ class PaymentTypeModel(models.Model):
     color = models.CharField(max_length=100)
     interst = models.IntegerField()
     terminyear = models.IntegerField()
-    extramounthly = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')
+    extramonthly = MoneyField(max_digits=14, decimal_places=2, default_currency='USD')

@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
-from collegecost_api.models import CollegeModel
+from collegecost_api.models import *
 
 class CollegeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -14,7 +14,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'user', 'startdate', 'enddate')
+        fields = ('id', 'url', 'user', 'startdate', 'enddate', 'createyear')
         depth = 1
 
 class College(ViewSet):
@@ -61,3 +61,16 @@ def destroy(self, request, pk=None):
     except Exception as ex:
         return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+def list(self, request):
+    """Handle GET requests to payment types resource
+
+    Returns:
+        Response -- JSON serialized list of payment types
+    """
+    colleges = CollegeModel.object.all()
+    name = self.request.query_params.get('name', None)
+    startdate = self.request.query_params.get('startdate', None)
+    enddate = self.request.query_params.get('enddate', None)
+    serializer = CollegeSerializer(
+        colleges, many=True, context={'request': request})
+    return Response(serializer.data)
