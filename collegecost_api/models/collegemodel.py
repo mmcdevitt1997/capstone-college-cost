@@ -6,7 +6,7 @@ from .yearmodel import YearModel
 
 class CollegeModel(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     startyear = models.DateField(null=True, blank=True)
     endyear = models.DateField(null=True, blank=True)

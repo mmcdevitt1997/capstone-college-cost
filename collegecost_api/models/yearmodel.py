@@ -1,12 +1,12 @@
 from django.db import models
 from .costmodel import CostModel
 from .paymentmodel import PaymentModel
-from .collegemodel import CollegeModel
+
 
 class YearModel (models.Model):
     name = models.CharField(max_length=50, blank=True)
     year = models.DateField(null=True, blank=True)
-    college = models.ForeignKey(CollegeModel, on_delete=models.DO_NOTHING)
+    college = models.ForeignKey("CollegeModel", on_delete=models.DO_NOTHING)
     cost = models.ForeignKey(CostModel, on_delete=models.CASCADE )
     payment = models.ForeignKey(PaymentModel, on_delete=models.CASCADE)
 
