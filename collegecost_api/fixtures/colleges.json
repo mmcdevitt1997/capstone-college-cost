@@ -1,0 +1,57 @@
+[
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "name":"Columbia State",
+      "numberofyears": 4
+    }
+  },
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "name":"Pen state",
+      "numberofyears": 4
+
+    }
+  },
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "name":"Fisk",
+      "numberofyears": 4
+    }
+  },
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "name":"Vandy",
+      "numberofyears": 4
+    }
+  },
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "name":"Harvard",
+      "numberofyears": 4
+    }
+  },
+  {
+    "model": "collegecost_api.collegemodel",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "name":"Belmont",
+      "numberofyears": 4
+    }
+  }
+]

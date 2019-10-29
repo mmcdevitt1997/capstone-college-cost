@@ -1,18 +1,18 @@
 from django.conf.urls import url, include
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
-from collegecost_api.models import *
+# from collegecost_api.models import *
 from collegecost_api.views import *
 
 router = routers.DefaultRouter(trailing_slash=False)
 
-router.register(r'colleges', College, 'college')
-router.register(r'years', Year, 'year')
-router.register(r'products', Cost, 'product')
-router.register(r'payments', Payment, 'payment')
+router.register(r'colleges', College)
+router.register(r'years', Year)
+router.register(r'costs', Cost)
+router.register(r'payments', Payment)
 router.register(r'users', Users, 'user')
-router.register(r'paymenttypes', PaymentType, 'paymenttype')
-router.register(r'costtypes', CostType, 'costtype')
+router.register(r'paymenttypes', PaymentType)
+router.register(r'costtypes', CostType)
 
 
 urlpatterns = [

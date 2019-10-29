@@ -18,6 +18,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
         depth = 1
 
 class College(ViewSet):
+    queryset = CollegeModel.objects.all()
     def create(self, request):
         """Handle POST operations
         Returns:
@@ -32,45 +33,45 @@ class College(ViewSet):
         serializer = CollegeSerializer(new_college, context={'request': request})
         return Response(serializer.data)
 
-def retrieve(self, request, pk=None):
-    """Handle GET requests for single park area
-    Returns:
-        Response -- JSON serialized park area instance
-    """
-    try:
-        college = CollegeModel.objects.get(pk=pk)
-        serializer = CollegeSerializer(college, context={'request': request})
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single park area
+        Returns:
+            Response -- JSON serialized park area instance
+        """
+        try:
+            college = CollegeModel.objects.get(pk=pk)
+            serializer = CollegeSerializer(college, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single product are
+        Returns:
+            Response -- 200, 404, or 500 status code
+        """
+        try:
+            college = CollegeModel.objects.get(pk=pk)
+            college.delete()
+
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        except CollegeModel.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def list(self, request):
+        """Handle GET requests to payment types resource
+
+        Returns:
+            Response -- JSON serialized list of payment types
+        """
+        colleges = CollegeModel.object.all()
+        name = self.request.query_params.get('name', None)
+        startdate = self.request.query_params.get('startdate', None)
+        enddate = self.request.query_params.get('enddate', None)
+        serializer = CollegeSerializer(
+            colleges, many=True, context={'request': request})
         return Response(serializer.data)
-    except Exception as ex:
-        return HttpResponseServerError(ex)
-
-def destroy(self, request, pk=None):
-    """Handle DELETE requests for a single product are
-    Returns:
-        Response -- 200, 404, or 500 status code
-    """
-    try:
-        college = CollegeModel.objects.get(pk=pk)
-        college.delete()
-
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
-
-    except CollegeModel.DoesNotExist as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
-
-    except Exception as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-def list(self, request):
-    """Handle GET requests to payment types resource
-
-    Returns:
-        Response -- JSON serialized list of payment types
-    """
-    colleges = CollegeModel.object.all()
-    name = self.request.query_params.get('name', None)
-    startdate = self.request.query_params.get('startdate', None)
-    enddate = self.request.query_params.get('enddate', None)
-    serializer = CollegeSerializer(
-        colleges, many=True, context={'request': request})
-    return Response(serializer.data)

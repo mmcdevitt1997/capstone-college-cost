@@ -14,10 +14,11 @@ class PaymentSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'url', 'amount', 'paymenttype')
-        depth = 0
 
 class Payment(ViewSet):
+    queryset = PaymentModel.objects.all()
     def create(self, request):
+
         """Handle POST operations
         Returns:
             Response -- JSON serialized Attraction instance
@@ -28,45 +29,45 @@ class Payment(ViewSet):
         serializer = PaymentSerializer(new_payment, context={'request': request})
         return Response(serializer.data)
 
-def retrieve(self, request, pk=None):
-    """Handle GET requests for single park area
-    Returns:
-        Response -- JSON serialized park area instance
-    """
-    try:
-       payment = PaymentModel.objects.get(pk=pk)
-       serializer = PaymentSerializer(payment, context={'request': request})
-       return Response(serializer.data)
-    except Exception as ex:
-        return HttpResponseServerError(ex)
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single park area
+        Returns:
+            Response -- JSON serialized park area instance
+        """
+        try:
+            payment = PaymentModel.objects.get(pk=pk)
+            serializer = PaymentSerializer(payment, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
 
-def destroy(self, request, pk=None):
-    """Handle DELETE requests for a single product are
-    Returns:
-        Response -- 200, 404, or 500 status code
-    """
-    try:
-        payment = PaymentModel.objects.get(pk=pk)
-        payment.delete()
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single product are
+        Returns:
+            Response -- 200, 404, or 500 status code
+        """
+        try:
+            payment = PaymentModel.objects.get(pk=pk)
+            payment.delete()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-    except PaymentModel.DoesNotExist as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        except PaymentModel.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
-    except Exception as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def list(self, request):
-    """Handle GET requests to payment types resource
+    def list(self, request):
+        """Handle GET requests to payment types resource
 
-    Returns:
-        Response -- JSON serialized list of payment types
-    """
-    payments = PaymentModel.object.all()
-    amount = self.request.query_params.get('amount', None)
-    paymenttype = self.request.query_params.get('paymenttype', None)
+        Returns:
+            Response -- JSON serialized list of payment types
+        """
+        payments = PaymentModel.object.all()
+        amount = self.request.query_params.get('amount', None)
+        paymenttype = self.request.query_params.get('paymenttype', None)
 
-    serializer = PaymentSerializer(
-        payments, many=True, context={'request': request})
-    return Response(serializer.data)
+        serializer = PaymentSerializer(
+            payments, many=True, context={'request': request})
+        return Response(serializer.data)

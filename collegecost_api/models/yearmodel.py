@@ -7,8 +7,8 @@ class YearModel (models.Model):
     name = models.CharField(max_length=50, blank=True)
     year = models.DateField(null=True, blank=True)
     college = models.ForeignKey("CollegeModel", on_delete=models.DO_NOTHING)
-    cost = models.ForeignKey(CostModel, on_delete=models.CASCADE )
-    payment = models.ForeignKey(PaymentModel, on_delete=models.CASCADE)
+    cost = models.ForeignKey(CostModel, on_delete=models.CASCADE, null=True, blank=True)
+    payment = models.ForeignKey(PaymentModel, on_delete=models.CASCADE, null=True, blank=True)
 
 @property
 def yearly_cost(self):

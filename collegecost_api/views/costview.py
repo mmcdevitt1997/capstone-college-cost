@@ -17,6 +17,7 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
         depth = 0
 
 class Cost(ViewSet):
+    queryset = CostModel.objects.all()
     def create(self, request):
         """Handle POST operations
         Returns:
