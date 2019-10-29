@@ -66,7 +66,7 @@ class PaymentType(ViewSet):
         Returns:
             Response -- JSON serialized list of payment types
         """
-        paymenttypes = CollegeModel.object.all()
+        paymenttypes = PaymentTypeModel.objects.all()
         name = self.request.query_params.get('name', None)
         color = self.request.query_params.get('color', None)
         interest = self.request.query_params.get('interest', None)
