@@ -23,5 +23,5 @@ def create_year(instance, created, **kwargs, ):
             YearModel.objects.create(
                 name=f'year {numyear+1}',
                 year=numyear+1,
-                college=instance.id
+                college=instance
             )

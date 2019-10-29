@@ -6,11 +6,9 @@ from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 
 
-
 @csrf_exempt
 def login_user(request):
     '''Handles the authentication of a user
-
     Method arguments:
       request -- The full HTTP request object
     '''
@@ -28,8 +26,7 @@ def login_user(request):
         # If authentication was successful, respond with their token
         if authenticated_user is not None:
             token = Token.objects.get(user=authenticated_user)
-            user = User.objects.get(user=authenticated_user)
-            data = json.dumps({"valid": True, "token": token.key, "user_id": user.user_id})
+            data = json.dumps({"valid": True, "token": token.key})
             return HttpResponse(data, content_type='application/json')
 
         else:
@@ -41,7 +38,6 @@ def login_user(request):
 @csrf_exempt
 def register_user(request):
     '''Handles the creation of a new user for authentication
-
     Method arguments:
       request -- The full HTTP request object
     '''
@@ -59,18 +55,17 @@ def register_user(request):
         last_name=req_body['last_name']
     )
 
-    user = User.objects.create(
-        address=req_body['address'],
-        phone_number=req_body['phone_number'],
-        user=new_user
-    )
-
-    # Commit the user to the database by saving it
-    user.save()
 
     # Use the REST Framework's token generator on the new user account
     token = Token.objects.create(user=new_user)
 
     # Return the token to the client
-    data = json.dumps({"token": token.key, "user_id": new_user.id})
+    data = json.dumps({"token": token.key})
     return HttpResponse(data, content_type='application/json')
+
+
+
+
+
+
+

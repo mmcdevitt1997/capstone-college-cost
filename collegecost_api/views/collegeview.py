@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
+# user = User.objects.get(id = id)
 from collegecost_api.models import *
 
 class CollegeSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +15,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'user', 'startdate', 'enddate', 'createyear')
+        fields = ('id', 'url', 'user', 'numberofyears', 'name' )
         depth = 1
 
 class College(ViewSet):
@@ -24,12 +25,13 @@ class College(ViewSet):
         Returns:
             Response -- JSON serialized Attraction instance
         """
+
+        print("WTF???", request.user)
         new_college = CollegeModel()
         new_college.name = request.data["name"]
-        new_college.startdate = request.data["startdate"]
-        new_college.enddate = request.data["enddate"]
-        user = CollegeModel.objects.get(user=request.auth.user)
-        new_college.user = user
+        new_college.numberofyears = request.data["numberofyears"]
+        new_college.user = User
+        new_college.save()
         serializer = CollegeSerializer(new_college, context={'request': request})
         return Response(serializer.data)
 
@@ -70,8 +72,7 @@ class College(ViewSet):
         """
         colleges = CollegeModel.object.all()
         name = self.request.query_params.get('name', None)
-        startdate = self.request.query_params.get('startdate', None)
-        enddate = self.request.query_params.get('enddate', None)
+        numberofyears = self.request.query_params.get('numberofyears', None)
         serializer = CollegeSerializer(
             colleges, many=True, context={'request': request})
         return Response(serializer.data)
