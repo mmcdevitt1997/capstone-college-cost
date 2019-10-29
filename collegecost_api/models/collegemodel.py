@@ -21,7 +21,7 @@ def create_year(instance, created, **kwargs, ):
     for numyear in range(yeartest):
         if created:
             YearModel.objects.create(
-                name=f'year {numyear+1}',
-                year=numyear+1,
+                name=f'year {numyear}',
+                year=numyear,
                 college=instance
             )

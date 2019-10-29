@@ -15,7 +15,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'user', 'numberofyears', 'name' )
+        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name' )
         depth = 1
 
 class College(ViewSet):
@@ -26,11 +26,12 @@ class College(ViewSet):
             Response -- JSON serialized Attraction instance
         """
 
-        print("WTF???", request.user)
+        print("WTF???", request.auth.user)
         new_college = CollegeModel()
         new_college.name = request.data["name"]
         new_college.numberofyears = request.data["numberofyears"]
-        new_college.user = User
+        user = request.auth.user
+        new_college.user = user
         new_college.save()
         serializer = CollegeSerializer(new_college, context={'request': request})
         return Response(serializer.data)

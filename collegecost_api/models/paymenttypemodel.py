@@ -1,5 +1,5 @@
 from django.db import models
-from djmoney.models.fields import MoneyField
+
 
 class PaymentTypeModel(models.Model):
     name = models.CharField(max_length=50)
