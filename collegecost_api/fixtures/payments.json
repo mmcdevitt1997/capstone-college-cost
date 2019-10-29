@@ -1,0 +1,34 @@
+[
+    {
+      "model": "collegecost_api.paymentmodel",
+      "pk": 1,
+      "fields": {
+        "amount":50,
+        "paymenttype": 1
+      }
+    },
+    {
+      "model": "collegecost_api.paymentmodel",
+      "pk": 2,
+      "fields": {
+        "amount":100,
+        "paymenttype": 2
+      }
+    },
+    {
+      "model": "collegecost_api.paymentmodel",
+      "pk": 3,
+      "fields": {
+        "amount":1100,
+        "paymenttype": 3
+      }
+    },
+    {
+      "model": "collegecost_api.paymentmodel",
+      "pk": 4,
+      "fields": {
+        "amount":300,
+        "paymenttype": 4
+      }
+    }
+  ]

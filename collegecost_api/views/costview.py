@@ -14,7 +14,7 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'url', 'amount', 'paymenttype')
-        depth = 0
+
 
 class Cost(ViewSet):
     queryset = CostModel.objects.all()
