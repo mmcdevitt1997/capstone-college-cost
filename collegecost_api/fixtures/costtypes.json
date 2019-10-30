@@ -30,9 +30,9 @@
       "model": "collegecost_api.costtypemodel",
       "pk": 4,
       "fields": {
-
         "name":"car",
         "color": "green"
+
       }
     },
     {

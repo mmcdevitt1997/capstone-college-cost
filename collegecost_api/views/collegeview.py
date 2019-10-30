@@ -71,7 +71,7 @@ class College(ViewSet):
         Returns:
             Response -- JSON serialized list of payment types
         """
-        colleges = CollegeModel.object.all()
+        colleges = CollegeModel.objects.all()
         name = self.request.query_params.get('name', None)
         numberofyears = self.request.query_params.get('numberofyears', None)
         serializer = CollegeSerializer(

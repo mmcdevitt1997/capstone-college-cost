@@ -28,7 +28,9 @@ class PaymentType(ViewSet):
         new_paymenttype.interest = request.data["interest"]
         new_paymenttype.terminyear = request.data["terminyear"]
         new_paymenttype.terminyear = request.data["extramonthly"]
+        new_paymenttype.save()
         serializer = PaymentTypeSerializer(new_paymenttype, context={'request': request})
+
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

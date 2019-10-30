@@ -3,8 +3,9 @@
       "model": "collegecost_api.paymentmodel",
       "pk": 1,
       "fields": {
-        "amount":50,
-        "paymenttype": 1
+        "amount":0,
+        "paymenttype": 1,
+        "year": 1
       }
     },
     {
@@ -12,7 +13,8 @@
       "pk": 2,
       "fields": {
         "amount":100,
-        "paymenttype": 2
+        "paymenttype": 2,
+        "year": 2
       }
     },
     {
@@ -20,7 +22,8 @@
       "pk": 3,
       "fields": {
         "amount":1100,
-        "paymenttype": 3
+        "paymenttype": 3,
+        "year": 3
       }
     },
     {
@@ -28,7 +31,17 @@
       "pk": 4,
       "fields": {
         "amount":300,
-        "paymenttype": 4
+        "paymenttype": 4,
+        "year": 4
+      }
+    },
+    {
+      "model": "collegecost_api.paymentmodel",
+      "pk": 5,
+      "fields": {
+        "amount":300,
+        "paymenttype": 2,
+        "year": 4
       }
     }
   ]

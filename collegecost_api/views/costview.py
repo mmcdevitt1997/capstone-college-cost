@@ -10,10 +10,10 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CostModel
         url = serializers.HyperlinkedIdentityField(
-            view_name='costtype',
+            view_name='cost',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'amount', 'paymenttype')
+        fields = ('id', 'url', 'amount', 'costtype', 'year')
 
 
 class Cost(ViewSet):
@@ -23,51 +23,54 @@ class Cost(ViewSet):
         Returns:
             Response -- JSON serialized Attraction instance
         """
-        new_cost = CostTypeModel()
+        new_cost = CostModel()
         new_cost.amount = request.data["amount"]
-        new_cost.costtype = request.data["costtype"]
+        new_cost.costtype = CostTypeModel.objects.get(pk=request.data['costtype'])
+        new_cost.year = YearModel.objects.get(pk=request.data['year'])
+        new_cost.save()
         serializer = CostSerializer(new_cost, context={'request': request})
         return Response(serializer.data)
 
-def retrieve(self, request, pk=None):
-    """Handle GET requests for single park area
-    Returns:
-        Response -- JSON serialized park area instance
-    """
-    try:
-       cost = CostModel.objects.get(pk=pk)
-       serializer = CostSerializer(cost, context={'request': request})
-       return Response(serializer.data)
-    except Exception as ex:
-        return HttpResponseServerError(ex)
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for single park area
+        Returns:
+            Response -- JSON serialized park area instance
+        """
+        try:
+            cost = CostModel.objects.get(pk=pk)
+            serializer = CostSerializer(cost, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
 
-def destroy(self, request, pk=None):
-    """Handle DELETE requests for a single product are
-    Returns:
-        Response -- 200, 404, or 500 status code
-    """
-    try:
-        cost = CostModel.objects.get(pk=pk)
-        cost.delete()
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests for a single product are
+        Returns:
+            Response -- 200, 404, or 500 status code
+        """
+        try:
+            cost = CostModel.objects.get(pk=pk)
+            cost.delete()
 
-        return Response({}, status=status.HTTP_204_NO_CONTENT)
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-    except CostModel.DoesNotExist as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+        except CostModel.DoesNotExist as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
 
-    except Exception as ex:
-        return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Exception as ex:
+            return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def list(self, request):
-    """Handle GET requests to payment types resource
+    def list(self, request):
+        """Handle GET requests to payment types resource
 
-    Returns:
-        Response -- JSON serialized list of payment types
-    """
-    costs = CostModel.object.all()
-    amount = self.request.query_params.get('amount', None)
-    costtype = self.request.query_params.get('paymenttype', None)
+        Returns:
+            Response -- JSON serialized list of payment types
+        """
+        costs = CostModel.objects.all()
+        amount = self.request.query_params.get('amount', None)
+        costtype = self.request.query_params.get('costtype', None)
+        year = self.request.query_params.get('year', None)
 
-    serializer = CostSerializer(
-        costs, many=True, context={'request': request})
-    return Response(serializer.data)
+        serializer = CostSerializer(
+            costs, many=True, context={'request': request})
+        return Response(serializer.data)

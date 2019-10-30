@@ -26,8 +26,10 @@ class CostType(ViewSet):
         new_costtype = CostTypeModel()
         new_costtype.name = request.data["name"]
         new_costtype.color = request.data["color"]
+        new_costtype.save()
         serializer = CostTypeSerializer(new_costtype, context={'request': request})
         return Response(serializer.data)
+
 
     def retrieve(self, request, pk=None):
         """Handle GET requests for single park area
