@@ -15,7 +15,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name' )
+        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name')
         depth = 1
 
 class College(ViewSet):

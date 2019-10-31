@@ -18,6 +18,7 @@ class YearModel (models.Model):
         cost_amount = CostModel.objects.filter(year=self)
         total_cost = 0
         for cost in cost_amount:
+            print(cost.id)
             total_cost += cost.amount
         return total_cost
 
@@ -30,5 +31,5 @@ class YearModel (models.Model):
         return total_payment
     @property
     def yearly_balance(self):
-       return self.yearly_cost - self.yearly_payment
+       return  self.yearly_payment - self.yearly_cost
 
