@@ -1,11 +1,11 @@
-"""View module for handling requests about customers"""
+"""View module for handling requests about colleges"""
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
-# user = User.objects.get(id = id)
+
 from collegecost_api.models import *
 
 class CollegeSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,7 +15,7 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name')
+        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name', 'college_total_payment', 'college_total_cost', 'college_balance')
         depth = 1
 
 class College(ViewSet):
@@ -23,10 +23,8 @@ class College(ViewSet):
     def create(self, request):
         """Handle POST operations
         Returns:
-            Response -- JSON serialized Attraction instance
+            Response -- JSON serializes college instance
         """
-
-        print("WTF???", request.auth.user)
         new_college = CollegeModel()
         new_college.name = request.data["name"]
         new_college.numberofyears = request.data["numberofyears"]
@@ -37,9 +35,9 @@ class College(ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        """Handle GET requests for single park area
+        """Handle GET requests for single college
         Returns:
-            Response -- JSON serialized park area instance
+            Response -- JSON serialized college instance
         """
         try:
             college = CollegeModel.objects.get(pk=pk)
@@ -49,7 +47,7 @@ class College(ViewSet):
             return HttpResponseServerError(ex)
 
     def destroy(self, request, pk=None):
-        """Handle DELETE requests for a single product are
+        """Handle DELETE requests for a single college
         Returns:
             Response -- 200, 404, or 500 status code
         """
@@ -66,10 +64,10 @@ class College(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def list(self, request):
-        """Handle GET requests to payment types resource
+        """Handle GET requests to all of the college  resource
 
         Returns:
-            Response -- JSON serialized list of payment types
+            Response -- JSON serialized list of colleges
         """
         colleges = CollegeModel.objects.all()
         name = self.request.query_params.get('name', None)
