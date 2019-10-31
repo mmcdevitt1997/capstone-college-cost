@@ -35,6 +35,15 @@ class CollegeModel(models.Model):
     def college_balance(self):
         return  self.college_total_payment - self.college_total_cost
 
+    @property
+    def chart_data (self):
+        years = YearModel.objects.filter(college=self)
+        for x in years:
+            return x.year
+
+
+
+
 
 
 @receiver(post_save, sender=CollegeModel)

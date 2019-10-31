@@ -18,7 +18,6 @@ class YearModel (models.Model):
         cost_amount = CostModel.objects.filter(year=self)
         total_cost = 0
         for cost in cost_amount:
-            print(cost.id)
             total_cost += cost.amount
         return total_cost
 
