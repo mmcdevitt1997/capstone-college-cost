@@ -1,0 +1,56 @@
+[
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 1,
+      "fields": {
+        "name":"books",
+        "color": "test"
+      }
+    },
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 2,
+      "fields": {
+
+        "name":"class",
+        "color": "red"
+
+      }
+    },
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 3,
+      "fields": {
+
+        "name":"Fisk",
+        "color": "blue"
+      }
+    },
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 4,
+      "fields": {
+        "name":"car",
+        "color": "green"
+
+      }
+    },
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 5,
+      "fields": {
+
+        "name":"food",
+        "color": "blue"
+      }
+    },
+    {
+      "model": "collegecost_api.costtypemodel",
+      "pk": 6,
+      "fields": {
+
+        "name":"food",
+        "color": "red"
+      }
+    }
+  ]

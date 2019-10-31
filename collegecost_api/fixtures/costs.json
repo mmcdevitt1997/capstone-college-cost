@@ -1,0 +1,40 @@
+[
+    {
+      "model": "collegecost_api.costmodel",
+      "pk": 1,
+      "fields": {
+        "amount":0,
+        "costtype": 1,
+        "year": 1
+      }
+    },
+    {
+      "model": "collegecost_api.costmodel",
+      "pk": 2,
+      "fields": {
+        "amount":100,
+        "costtype": 2,
+        "year": 2
+      }
+    },
+    {
+      "model": "collegecost_api.costmodel",
+      "pk": 3,
+      "fields": {
+        "amount":1100,
+        "costtype": 3,
+        "year": 3
+
+      }
+    },
+    {
+      "model": "collegecost_api.costmodel",
+      "pk": 4,
+      "fields": {
+        "amount":300,
+        "costtype": 4,
+        "year": 2
+
+      }
+    }
+  ]

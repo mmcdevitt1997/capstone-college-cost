@@ -1,0 +1,46 @@
+[
+    {
+      "model": "collegecost_api.paymenttypemodel",
+      "pk": 1,
+      "fields": {
+        "name":"Government loan",
+        "color": "red",
+        "interest": 11,
+        "terminyear": 10,
+        "extramonthly": null
+      }
+    },
+    {
+      "model": "collegecost_api.paymenttypemodel",
+      "pk": 2,
+      "fields": {
+        "name":"parents",
+        "color": "blue",
+        "interest": null,
+        "terminyear": null,
+        "extramonthly": null
+      }
+    },
+    {
+      "model": "collegecost_api.paymenttypemodel",
+      "pk": 3,
+      "fields": {
+        "name":"Scholarship",
+        "color": "blue",
+        "interest": null,
+        "terminyear": null,
+        "extramonthly": null
+      }
+    },
+    {
+      "model": "collegecost_api.paymenttypemodel",
+      "pk": 4,
+      "fields": {
+        "name":"Personal Loan",
+        "color": "gray",
+        "interest": 25,
+        "terminyear": 5,
+        "extramonthly": null
+      }
+    }
+  ]
