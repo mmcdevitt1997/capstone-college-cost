@@ -13,7 +13,7 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
             view_name='cost',
             lookup_field='id'
         )
-        fields = ('id', 'amount', 'costtype', 'year')
+        fields = ('id', 'amount', 'costtype')
         depth = 2
 
 class Cost(ViewSet):

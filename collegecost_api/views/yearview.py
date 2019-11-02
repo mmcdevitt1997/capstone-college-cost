@@ -94,7 +94,9 @@ class Year(ViewSet):
         Returns:
             Response -- JSON serialized list of payment types
         """
-        years = YearModel.objects.all()
+        collegeId = self.request.query_params.get('collegeId', None)
+        year_all = YearModel.objects.all()
+        years = year_all.filter( college = collegeId)
 
         chartdata = self.request.query_params.get('chartdata', None)
         if chartdata is not None:
