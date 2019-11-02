@@ -1,12 +1,12 @@
-"""View module for handling requests about colleges"""
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
-from collegecost_api.views.yearview import YearSlimSerializer
-from collegecost_api.views.paymentview import PaymentSerializer
+from collegecost_api.views.yearview import YearSerializer
+
+
 from collegecost_api.models import *
 
 class CollegeSerializer(serializers.HyperlinkedModelSerializer):
@@ -17,9 +17,9 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name', 'college_total_payment', 'college_total_cost', 'college_balance', 'chart_data')
-        depth = 2
+        depth = 1
 class CollegeDatatSerializer(serializers.HyperlinkedModelSerializer):
-    years = YearSlimSerializer(many=True)
+    years =  YearSerializer(many=True)
 
     class Meta:
         model = CollegeModel
@@ -27,9 +27,8 @@ class CollegeDatatSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'name', 'years')
-
-
+        fields = ('id', 'url', 'name', 'year')
+        depth = 2
 
 
 class College(ViewSet):
@@ -84,22 +83,18 @@ class College(ViewSet):
             Response -- JSON serialized list of colleges
         """
         colleges = CollegeModel.objects.all()
-        # name = self.request.query_params.get('name', None)
-        # numberofyears = self.request.query_params.get('numberofyears', None)
+        name = self.request.query_params.get('name', None)
+        numberofyears = self.request.query_params.get('numberofyears', None)
 
         chartdata = self.request.query_params.get('chartdata', None)
+
         if chartdata is not None:
-            for x in colleges:
-                relateddata = YearModel.objects.filter(college=x)
-                x.years = relateddata
-                for y in relateddata:
-                    relatedpayment = PaymentModel.objects.filter(year=y)
-                    y.payments = relatedpayment
-
-
+            for college in chartdata:
+                chartdata = YearModel.objects.filter(college=college)
+                college.years = chartdata
 
             serializer = CollegeDatatSerializer(
-                colleges, many=True, context={'request': request})
+                chartdata, many=True, context={'request': request})
             return Response(serializer.data)
 
         serializer = CollegeSerializer(

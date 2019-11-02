@@ -41,11 +41,6 @@ class CollegeModel(models.Model):
         for x in years:
             return x.year
 
-
-
-
-
-
 @receiver(post_save, sender=CollegeModel)
 def create_year(instance, created, **kwargs):
     # does the math for how many years the user is going to college

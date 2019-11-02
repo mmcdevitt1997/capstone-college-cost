@@ -13,8 +13,17 @@ class YearSerializer(serializers.HyperlinkedModelSerializer):
             view_name='year',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name', 'college', 'year', 'yearly_cost', 'yearly_payment', 'yearly_balance')
+        fields = ('id', 'name', 'college', 'year', 'yearly_cost', 'yearly_payment', 'yearly_balance')
         depth = 2
+
+class YearSlimSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = YearModel
+        url = serializers.HyperlinkedIdentityField(
+            view_name='year',
+            lookup_field='id'
+        )
+        fields = ('id', 'name', 'yearly_cost', 'yearly_payment', 'yearly_balance')
 
 class Year(ViewSet):
     queryset = YearModel.objects.all()
@@ -72,10 +81,16 @@ class Year(ViewSet):
             Response -- JSON serialized list of payment types
         """
         years = YearModel.objects.all()
+
         name = self.request.query_params.get('name', None)
         year = self.request.query_params.get('year', None)
         college = self.request.query_params.get('college', None)
 
+        
+
+
         serializer = YearSerializer(
             years, many=True, context={'request': request})
         return Response(serializer.data)
+
+
