@@ -4,6 +4,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 # from collegecost_api.models import *
 from collegecost_api.views import *
 
+
 router = routers.DefaultRouter(trailing_slash=False)
 
 router.register(r'colleges', College)
@@ -13,6 +14,7 @@ router.register(r'payments', Payment)
 router.register(r'users', Users, 'user')
 router.register(r'paymenttypes', PaymentType)
 router.register(r'costtypes', CostType)
+
 
 
 urlpatterns = [

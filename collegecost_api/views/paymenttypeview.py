@@ -13,7 +13,7 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='paymenttype',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name', 'color', 'interest', 'terminyear', 'extramonthly')
+        fields = ('id', 'name', 'color')
         depth = 1
 
 class PaymentType(ViewSet):

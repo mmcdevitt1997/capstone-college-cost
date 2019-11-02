@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
-from collegecost_api.views.yearview import YearSlimSerializer
+from collegecost_api.views.yearview import *
 from collegecost_api.views.paymentview import PaymentSerializer
 from collegecost_api.models import *
 
@@ -16,8 +16,8 @@ class CollegeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='college',
             lookup_field='id'
         )
-        fields = ('id', 'user_id', 'url', 'user', 'numberofyears', 'name', 'college_total_payment', 'college_total_cost', 'college_balance', 'chart_data')
-        depth = 2
+        fields = ('id', 'user_id', 'numberofyears', 'name', 'college_total_payment', 'college_total_cost', 'college_balance')
+        depth = 1
 class CollegeDatatSerializer(serializers.HyperlinkedModelSerializer):
     years = YearSlimSerializer(many=True)
 
@@ -28,9 +28,7 @@ class CollegeDatatSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'name', 'years')
-
-
-
+        depth = 1
 
 class College(ViewSet):
     queryset = CollegeModel.objects.all()
@@ -53,13 +51,17 @@ class College(ViewSet):
         Returns:
             Response -- JSON serialized college instance
         """
-        try:
-            college = CollegeModel.objects.get(pk=pk)
-            serializer = CollegeSerializer(college, context={'request': request})
+        college = CollegeModel.objects.get(pk=pk)
+        chartdata = self.request.query_params.get('chartdata', None)
+        if chartdata is not None:
+            relateddata = YearModel.objects.filter(college=pk)
+            college.years = relateddata
+            serializer = CollegeDatatSerializer(
+                college, context={'request': request})
             return Response(serializer.data)
-        except Exception as ex:
-            return HttpResponseServerError(ex)
 
+        serializer = CollegeSerializer(college, context={'request': request})
+        return Response(serializer.data)
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single college
         Returns:
@@ -84,19 +86,13 @@ class College(ViewSet):
             Response -- JSON serialized list of colleges
         """
         colleges = CollegeModel.objects.all()
-        # name = self.request.query_params.get('name', None)
-        # numberofyears = self.request.query_params.get('numberofyears', None)
+  
 
         chartdata = self.request.query_params.get('chartdata', None)
         if chartdata is not None:
             for x in colleges:
                 relateddata = YearModel.objects.filter(college=x)
                 x.years = relateddata
-                for y in relateddata:
-                    relatedpayment = PaymentModel.objects.filter(year=y)
-                    y.payments = relatedpayment
-
-
 
             serializer = CollegeDatatSerializer(
                 colleges, many=True, context={'request': request})

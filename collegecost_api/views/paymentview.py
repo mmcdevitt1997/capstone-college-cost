@@ -13,7 +13,8 @@ class PaymentSerializer(serializers.HyperlinkedModelSerializer):
             view_name='payment',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'amount', 'paymenttype', 'year')
+        fields = ('id', 'amount', 'paymenttype', 'year')
+        depth = 2
 
 class Payment(ViewSet):
     queryset = PaymentModel.objects.all()
