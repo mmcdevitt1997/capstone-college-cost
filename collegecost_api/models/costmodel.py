@@ -1,5 +1,5 @@
 from django.db import models
-from .costtypemodel import CostTypeModel
+
 
 
 class CostModel(models.Model):

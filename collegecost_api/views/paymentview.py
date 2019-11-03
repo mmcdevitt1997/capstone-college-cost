@@ -26,7 +26,8 @@ class Payment(ViewSet):
         """
         new_payment = PaymentModel()
         new_payment.amount = request.data["amount"]
-        new_payment.paymenttype = PaymentTypeModel.objects.get(pk=request.data["paymenttype"])
+        new_payment.color = request.data["color"]
+        new_payment.name = request.data["name"]
         new_payment.year = YearModel.objects.get(pk=request.data["year"])
         new_payment.save()
         serializer = PaymentSerializer(new_payment, context={'request': request})
@@ -69,7 +70,7 @@ class Payment(ViewSet):
         """
         payments = PaymentModel.objects.all()
         amount = self.request.query_params.get('amount', None)
-        paymenttype = self.request.query_params.get('paymenttype', None)
+
         year = self.request.query_params.get('year', None)
 
         serializer = PaymentSerializer(

@@ -1,5 +1,5 @@
 from django.db import models
-from .paymenttypemodel import PaymentTypeModel
+
 
 
 class PaymentModel(models.Model):
