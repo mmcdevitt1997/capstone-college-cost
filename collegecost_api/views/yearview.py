@@ -4,7 +4,10 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from django.contrib.auth.models import User
+from collegecost_api.views.costview import CostSerializer
+from collegecost_api.views.paymentview import PaymentSerializer
 from collegecost_api.models import *
+from collegecost_api.views.helper import FlattenMixin
 
 class YearSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -13,8 +16,34 @@ class YearSerializer(serializers.HyperlinkedModelSerializer):
             view_name='year',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name', 'college', 'year', 'yearly_cost', 'yearly_payment', 'yearly_balance')
-        depth = 2
+        fields = ('id', 'name', 'college', 'year', 'yearly_cost', 'yearly_payment', 'yearly_balance')
+        depth = 1
+
+class YearSlimSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = YearModel
+        url = serializers.HyperlinkedIdentityField(
+            view_name='year',
+            lookup_field='id'
+        )
+        fields = ('id', 'name', 'yearly_cost', 'yearly_payment', 'yearly_balance')
+
+class YearChartDataSerializer(serializers.HyperlinkedModelSerializer):
+    costs = CostSerializer(many="True")
+    payments = PaymentSerializer(many="True")
+
+
+
+    class Meta:
+        model = YearModel
+        url = serializers.HyperlinkedIdentityField(
+            view_name='year',
+            lookup_field='id'
+        )
+
+        fields = ('id', 'name', 'yearly_balance', 'payments', 'costs')
+
+
 
 class Year(ViewSet):
     queryset = YearModel.objects.all()
@@ -71,11 +100,24 @@ class Year(ViewSet):
         Returns:
             Response -- JSON serialized list of payment types
         """
-        years = YearModel.objects.all()
-        name = self.request.query_params.get('name', None)
-        year = self.request.query_params.get('year', None)
-        college = self.request.query_params.get('college', None)
+        collegeId = self.request.query_params.get('collegeId', None)
+        year_all = YearModel.objects.all()
+        years = year_all.filter( college = collegeId)
+
+        chartdata = self.request.query_params.get('chartdata', None)
+        if chartdata is not None:
+            for x in years:
+                relatedcost = CostModel.objects.filter(year=x)
+                x.costs = relatedcost
+                relatedpayment = PaymentModel.objects.filter(year=x)
+                x.payments = relatedpayment
+
+            serializer = YearChartDataSerializer(
+                years, many=True, context={'request': request})
+            return Response(serializer.data)
 
         serializer = YearSerializer(
             years, many=True, context={'request': request})
         return Response(serializer.data)
+
+

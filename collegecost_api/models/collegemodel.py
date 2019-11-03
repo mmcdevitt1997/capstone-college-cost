@@ -7,7 +7,7 @@ from .paymentmodel import PaymentModel
 from .costmodel import CostModel
 
 class CollegeModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     name = models.CharField(max_length=50)
     numberofyears = models.IntegerField()
 
@@ -34,7 +34,6 @@ class CollegeModel(models.Model):
     @property
     def college_balance(self):
         return  self.college_total_payment - self.college_total_cost
-
 
 
 @receiver(post_save, sender=CollegeModel)

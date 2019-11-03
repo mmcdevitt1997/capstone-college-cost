@@ -13,7 +13,8 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='paymenttype',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name', 'color', 'interest', 'terminyear', 'extramonthly')
+        fields = ('id', 'name', 'color')
+        depth = 1
 
 class PaymentType(ViewSet):
     queryset = PaymentTypeModel.objects.all()
@@ -28,7 +29,7 @@ class PaymentType(ViewSet):
         new_paymenttype.interest = request.data["interest"]
         new_paymenttype.terminyear = request.data["terminyear"]
         new_paymenttype.terminyear = request.data["extramonthly"]
-        
+
         new_paymenttype.save()
         serializer = PaymentTypeSerializer(new_paymenttype, context={'request': request})
 
@@ -47,7 +48,7 @@ class PaymentType(ViewSet):
             return HttpResponseServerError(ex)
 
     def destroy(self, request, pk=None):
-        """Handle DELETE requests for a single product are
+        """Handle DELETE requests for a single cost type are
         Returns:
             Response -- 200, 404, or 500 status code
         """
