@@ -12,8 +12,8 @@ router.register(r'years', Year)
 router.register(r'costs', Cost)
 router.register(r'payments', Payment)
 router.register(r'users', Users, 'user')
-router.register(r'paymenttypes', PaymentType)
-router.register(r'costtypes', CostType)
+
+
 
 
 

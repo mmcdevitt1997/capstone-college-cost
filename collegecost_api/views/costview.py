@@ -13,8 +13,8 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
             view_name='cost',
             lookup_field='id'
         )
-        fields = ('id', 'amount', 'costtype')
-        
+        fields = ('id', 'amount', 'name')
+
 
 class Cost(ViewSet):
     queryset = CostModel.objects.all()
@@ -25,7 +25,8 @@ class Cost(ViewSet):
         """
         new_cost = CostModel()
         new_cost.amount = request.data["amount"]
-        new_cost.costtype = CostTypeModel.objects.get(pk=request.data['costtype'])
+        # new_cost.color = request.data["color"]
+        new_cost.name = request.data["name"]
         new_cost.year = YearModel.objects.get(pk=request.data['year'])
         new_cost.save()
         serializer = CostSerializer(new_cost, context={'request': request})
@@ -68,7 +69,6 @@ class Cost(ViewSet):
         """
         costs = CostModel.objects.all()
         amount = self.request.query_params.get('amount', None)
-        costtype = self.request.query_params.get('costtype', None)
         year = self.request.query_params.get('year', None)
 
         serializer = CostSerializer(
