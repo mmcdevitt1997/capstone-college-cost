@@ -62,6 +62,7 @@ class College(ViewSet):
 
         serializer = CollegeSerializer(college, context={'request': request})
         return Response(serializer.data)
+        
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single college
         Returns:
