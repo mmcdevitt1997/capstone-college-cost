@@ -85,8 +85,8 @@ class College(ViewSet):
         Returns:
             Response -- JSON serialized list of colleges
         """
-        colleges = CollegeModel.objects.all()
-  
+
+        colleges = CollegeModel.objects.filter(user=request.auth.user)
 
         chartdata = self.request.query_params.get('chartdata', None)
         if chartdata is not None:

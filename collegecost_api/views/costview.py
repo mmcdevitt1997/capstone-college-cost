@@ -13,7 +13,7 @@ class CostSerializer(serializers.HyperlinkedModelSerializer):
             view_name='cost',
             lookup_field='id'
         )
-        fields = ('id', 'amount', 'costtype')
+        fields = ('id', 'amount', 'name')
 
 
 class Cost(ViewSet):
@@ -25,7 +25,7 @@ class Cost(ViewSet):
         """
         new_cost = CostModel()
         new_cost.amount = request.data["amount"]
-        new_cost.color = request.data["color"]
+        # new_cost.color = request.data["color"]
         new_cost.name = request.data["name"]
         new_cost.year = YearModel.objects.get(pk=request.data['year'])
         new_cost.save()
