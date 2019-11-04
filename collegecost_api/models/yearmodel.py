@@ -7,7 +7,7 @@ from .paymentmodel import PaymentModel
 class YearModel (models.Model):
     name = models.CharField(max_length=50, blank=True)
     year = models.IntegerField()
-    college = models.ForeignKey("CollegeModel", on_delete=models.DO_NOTHING)
+    college = models.ForeignKey("CollegeModel", on_delete=models.CASCADE)
 
 
     class Meta:
