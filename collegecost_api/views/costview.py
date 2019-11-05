@@ -25,7 +25,6 @@ class Cost(ViewSet):
         """
         new_cost = CostModel()
         new_cost.amount = request.data["amount"]
-        # new_cost.color = request.data["color"]
         new_cost.name = request.data["name"]
         new_cost.year = YearModel.objects.get(pk=request.data['year'])
         new_cost.save()
@@ -43,6 +42,20 @@ class Cost(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+    def update(self, request, pk=None):
+        """Handle PUT requests for a single payment type
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        update_cost = CostModel.objects.get(pk=pk)
+        update_cost.name = request.data["name"]
+        update_cost.amount = request.data["amount"]
+
+        update_cost.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single product are
