@@ -16,7 +16,7 @@ class YearSerializer(serializers.HyperlinkedModelSerializer):
             view_name='year',
             lookup_field='id'
         )
-        fields = ('id', 'name', 'college', 'year', 'yearly_cost', 'yearly_payment', 'yearly_balance')
+        fields = ('id', 'name', 'college', 'year', 'cost', 'payment', 'yearly_balance', 'cost_color', 'payment_color')
         depth = 1
 
 class YearSlimSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +26,7 @@ class YearSlimSerializer(serializers.HyperlinkedModelSerializer):
             view_name='year',
             lookup_field='id'
         )
-        fields = ('id', 'name', 'yearly_cost', 'yearly_payment', 'yearly_balance')
+        fields = ('id', 'name', 'cost', 'payment', 'yearly_balance')
 
 class YearChartDataSerializer(serializers.HyperlinkedModelSerializer):
     costs = CostSerializer(many="True")
@@ -41,7 +41,7 @@ class YearChartDataSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
 
-        fields = ('id', 'name', 'yearly_balance', 'payments', 'costs')
+        fields = ('id', 'name', 'yearly_balance', 'year', 'payments', 'costs', 'cost', 'payment', 'cost_color','payment_color')
 
 
 
@@ -76,6 +76,18 @@ class Year(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+    def update(self, request, pk=None):
+        """Handle PUT requests for a single payment type
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        update_year = YearModel.objects.get(pk=pk)
+        update_year.name = request.data["name"]
+
+        update_year.save()
+
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single product are

@@ -14,7 +14,7 @@ class YearModel (models.Model):
         verbose_name = ("year")
         verbose_name_plural = ("years")
     @property
-    def yearly_cost(self):
+    def cost(self):
         cost_amount = CostModel.objects.filter(year=self)
         total_cost = 0
         for cost in cost_amount:
@@ -22,7 +22,7 @@ class YearModel (models.Model):
         return total_cost
 
     @property
-    def yearly_payment(self):
+    def payment(self):
         payment_amount = PaymentModel.objects.filter(year=self)
         total_payment = 0
         for payment in payment_amount:
@@ -30,5 +30,13 @@ class YearModel (models.Model):
         return total_payment
     @property
     def yearly_balance(self):
-       return  self.yearly_payment - self.yearly_cost
+       return  self.payment - self.cost
+
+    @property
+    def payment_color(self):
+       return '#97e3d5'
+    @property
+    def cost_color(self):
+        return "#f47560"
+
 
