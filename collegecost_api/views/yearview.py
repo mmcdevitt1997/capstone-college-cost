@@ -41,7 +41,7 @@ class YearChartDataSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
 
-        fields = ('id', 'name', 'yearly_balance', 'year', 'payments', 'costs', 'cost', 'payment', 'cost_color','payment_color')
+        fields = ('id', 'name', 'yearly_balance', 'year', 'payments', 'costs', 'cost', 'payment', 'cost_color','payment_color', 'college')
 
 
 
