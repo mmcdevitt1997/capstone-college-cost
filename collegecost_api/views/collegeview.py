@@ -62,7 +62,18 @@ class College(ViewSet):
 
         serializer = CollegeSerializer(college, context={'request': request})
         return Response(serializer.data)
-        
+    def update(self, request, pk=None):
+        """Handle PUT requests for a single payment type
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        update_college = CollegeModel.objects.get(pk=pk)
+        update_college.name = request.data["name"]
+        update_college.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single college
         Returns:

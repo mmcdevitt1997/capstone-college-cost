@@ -44,6 +44,21 @@ class Payment(ViewSet):
         except Exception as ex:
             return HttpResponseServerError(ex)
 
+    def update(self, request, pk=None):
+        """Handle PUT requests for a single payment type
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        update_payment = PaymentModel.objects.get(pk=pk)
+        update_payment.name = request.data["name"]
+        update_payment.amount = request.data["amount"]
+        
+        update_payment.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
+
     def destroy(self, request, pk=None):
         """Handle DELETE requests for a single product are
         Returns:
