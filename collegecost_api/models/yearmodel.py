@@ -2,8 +2,6 @@ from django.db import models
 from .costmodel import CostModel
 from .paymentmodel import PaymentModel
 
-
-
 class YearModel (models.Model):
     name = models.CharField(max_length=50, blank=True)
     year = models.IntegerField()
@@ -31,12 +29,4 @@ class YearModel (models.Model):
     @property
     def yearly_balance(self):
        return  self.payment - self.cost
-
-    @property
-    def payment_color(self):
-       return '#97e3d5'
-    @property
-    def cost_color(self):
-        return "#f47560"
-
 

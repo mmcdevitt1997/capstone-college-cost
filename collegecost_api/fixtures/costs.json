@@ -4,7 +4,6 @@
       "pk": 1,
       "fields": {
         "amount":0,
-        "costtype": 1,
         "year": 1
       }
     },

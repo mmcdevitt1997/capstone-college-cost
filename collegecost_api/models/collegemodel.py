@@ -11,6 +11,8 @@ class CollegeModel(models.Model):
     name = models.CharField(max_length=50)
     numberofyears = models.IntegerField()
 
+    # the different calculations for a college 
+
     @property
     def college_total_payment(self):
         total_years = YearModel.objects.filter(college=self)
@@ -41,7 +43,6 @@ def create_year(instance, created, **kwargs):
     # does the math for how many years the user is going to college
     # by subtracting the end date year by the start date
     years = instance.numberofyears
-
     # This loop should take the number of years and  create the years with the object
     if created:
         for numyear in range(0, years):

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from collegecost_api.views.costview import CostSerializer
 from collegecost_api.views.paymentview import PaymentSerializer
 from collegecost_api.models import *
-from collegecost_api.views.helper import FlattenMixin
+
 
 class YearSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -41,7 +41,7 @@ class YearChartDataSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
 
-        fields = ('id', 'name', 'yearly_balance', 'year', 'payments', 'costs', 'cost', 'payment', 'cost_color','payment_color', 'college')
+        fields = ('id', 'name', 'yearly_balance', 'year', 'payments', 'costs', 'cost', 'payment', 'college')
 
 
 
